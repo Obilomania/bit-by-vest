@@ -14,38 +14,40 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Provider store={store}>
-    <Toaster
-      position="top-center"
-      reverseOrder={false}
-      toastOptions={{
-        // style: {
-        //   borderRadius: "10px",
-        //   background: "#333",
-        //   color: "#fff",
-        // },
-        success: {
-          duration: 4000,
-          style: {
-            background: "#000000",
-            color: "white",
-            border: "2px solid #fff",
-            width:"20rem"
+  <React.StrictMode>
+    <Provider store={store}>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          // style: {
+          //   borderRadius: "10px",
+          //   background: "#333",
+          //   color: "#fff",
+          // },
+          success: {
+            duration: 4000,
+            style: {
+              background: "#000000",
+              color: "white",
+              border: "2px solid #fff",
+              width: "20rem",
+            },
           },
-        },
-        error: {
-          duration: 4000,
-          style: {
-            background: "red",
-            color: "white",
-            border: "2px solid #fff",
-            width:"20rem"
+          error: {
+            duration: 4000,
+            style: {
+              background: "red",
+              color: "white",
+              border: "2px solid #fff",
+              width: "20rem",
+            },
           },
-        },
-      }}
-    />
-    <PersistGate loading={null} persistor={persistor}>
-      <App />
-    </PersistGate>
-  </Provider>
+        }}
+      />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
 );
