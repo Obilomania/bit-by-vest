@@ -8,11 +8,13 @@ const errorHandler = require("./Middlewares/errorMiddleware");
 const authRoute = require("./Routes/authRoute")
 const adminRoute = require("./Routes/adminRoute")
 const userRoute = require("./Routes/userRoute")
+const path = require("path")
 
 
 
 
 const app = express();
+// const __dirname = path.resolve()
 //Middleswares
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,9 +35,9 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
  
-app.get("/", (req, res) => {
-    res.send("Welcome to Crypto Investment")
-})
+// app.get("/", (req, res) => {
+//     res.send("Welcome to Crypto kolo Investment nwanem")
+// })
 
 
 //***************************ROUTES***************** */
@@ -47,12 +49,14 @@ app.use("/api/user-section", userRoute)
 app.use(errorHandler)
 
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "/frontend/build")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-//   });
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname,"..", "frontend", "build", "index.html"));
+  });
+} 
+  
 // }
 const PORT = process.env.PORT || 5000;
 mongoose

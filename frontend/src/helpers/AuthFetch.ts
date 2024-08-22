@@ -7,7 +7,7 @@ export const base_Url = "http://localhost:5000/api/"
 
 
 export const logoutUser = async () => {
-    const response: any = await axios.get("https://node-backend-bitbyvest.onrender.com/api/authentication/logout", {
+    const response: any = await axios.get("http://localhost:5000/api/authentication/logout", {
         withCredentials: true
     });
     if (response.data) {
@@ -22,7 +22,7 @@ export const logoutUser = async () => {
 
 export const loginStatus = async () => {
     try {
-        const response = await axios.get("https://node-backend-bitbyvest.onrender.com/api/authentication/authstatus", {
+        const response = await axios.get("http://localhost:5000/api/authentication/authstatus", {
             withCredentials: true
         })
         return response.data;

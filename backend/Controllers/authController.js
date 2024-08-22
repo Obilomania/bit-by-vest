@@ -126,13 +126,8 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const userLogOut = asyncHandler(async (req, res) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
-  return res.status(200).json({
-    message: "Successfully Logged out",
-  });
+ res.clearCookie("token");
+ res.status(200).json({ success: true, message: "Logged out successfully" });
 });
 
 // login status

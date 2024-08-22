@@ -56,8 +56,15 @@ const authAPI = createApi({
       }),
       invalidatesTags: ["authAPI"],
     }),
+    userLogOut: builder.query({
+      query: () => ({
+        url: "authentication/viewmyprofile",
+        credentials: "include",
+      }),
+      providesTags: ["authAPI"]
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useGetUserProfileQuery, useEditUserProfileMutation, useUserChangePasswordMutation } = authAPI;
+export const { useRegisterUserMutation, useLoginUserMutation, useGetUserProfileQuery, useEditUserProfileMutation, useUserChangePasswordMutation, useUserLogOutQuery } = authAPI;
 export default authAPI;
