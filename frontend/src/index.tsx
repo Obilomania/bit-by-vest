@@ -14,7 +14,6 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
       <Toaster
         position="top-center"
@@ -49,5 +48,4 @@ root.render(
         <App />
       </PersistGate>
     </Provider>
-  </React.StrictMode>
 );
