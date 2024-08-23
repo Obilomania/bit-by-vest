@@ -1,45 +1,42 @@
+const dotenv = require("dotenv").config();
+const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const path = require("path");
-require("dotenv").config();
-
-// *************IMPORTED ROUTES*********************
+const cors = require("cors");
 const errorHandler = require("./Middlewares/errorMiddleware");
 const authRoute = require("./Routes/authRoute");
 const adminRoute = require("./Routes/adminRoute");
 const userRoute = require("./Routes/userRoute");
+const path = require("path");
 
 const app = express();
-// Initialize Express App
-
-// Define PORT
-const PORT = process.env.PORT || 5000;
-
-// Middleware Configuration
-// Enable CORS
+// const __dirname = path.resolve()
+//Middleswares
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(
   cors({
-    origin: true, // Allows all origins
-    credentials: true, // Allows cookies and credentials to be sent
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    // origin: ["http://localhost:3000"],
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use(express.json());
+app.use(cookieParser());
+
+// app.get("/", (req, res) => {
+//     res.send("Welcome to Crypto kolo Investment nwanem")
+// })
 
 //***************************ROUTES***************** */
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(bodyParser.json());
-
-// Routes
 app.use("/api/authentication", authRoute);
 app.use("/api/admin-section", adminRoute);
 app.use("/api/user-section", userRoute);
 
+app.use(errorHandler);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -51,20 +48,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
-app.use(errorHandler);
-
-// Connect to MongoDB and Start Server
+// }
+const PORT = process.env.PORT || 5000;
 mongoose
-  .connect(process.env.MONGO_URL, {
-  })
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () =>
-      console.log(`Server is running on http://localhost:${PORT}`)
-    );
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
   })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB', err);
-    process.exit(1); // Exit process with failure
-  });
+  .catch((err) => console.log(err));
