@@ -1,10 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/api/"
+    : "/api/";
 const userTransactionAPI = createApi({
   reducerPath: "transactionAPI",
   baseQuery: fetchBaseQuery({
     // baseUrl: "https://node-backend-bitbyvest.onrender.com/api/"
-    baseUrl: "http://localhost:5000/api/",
+    baseUrl: baseURL,
   }),
   tagTypes: ["transactionAPI"],
   endpoints: (builder) => ({
