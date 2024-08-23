@@ -18,20 +18,20 @@ const app = express();
 //Middleswares
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: [
-      "https://4fph9v5g-3000.euw.devtunnels.ms",
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://node-frontend-bitbyvest.vercel.app/",
-      "https://node-frontend-bitbyvest.vercel.app",
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "https://4fph9v5g-3000.euw.devtunnels.ms",
+//       "http://localhost:3000",
+//       "http://localhost:3001",
+//       "https://node-frontend-bitbyvest.vercel.app/",
+//       "https://node-frontend-bitbyvest.vercel.app",
+//     ],
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 app.use(express.json());
 app.use(cookieParser());
  
