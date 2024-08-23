@@ -1,24 +1,28 @@
-const dotenv = require("dotenv").config()
+const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const cors = require("cors")
+const cors = require("cors");
 const errorHandler = require("./Middlewares/errorMiddleware");
-const authRoute = require("./Routes/authRoute")
-const adminRoute = require("./Routes/adminRoute")
-const userRoute = require("./Routes/userRoute")
-const path = require("path")
-
-
-
+const authRoute = require("./Routes/authRoute");
+const adminRoute = require("./Routes/adminRoute");
+const userRoute = require("./Routes/userRoute");
+const path = require("path");
 
 const app = express();
 // const __dirname = path.resolve()
 //Middleswares
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: ["https://bitbyvest.onrender.com", "http://localhost:3000"], // List your allowed origins
+    credentials: true, // Allow credentials (cookies)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 // app.use(
 //   cors({
 //     origin: [
@@ -35,29 +39,28 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // );
 app.use(express.json());
 app.use(cookieParser());
- 
+
 // app.get("/", (req, res) => {
 //     res.send("Welcome to Crypto kolo Investment nwanem")
 // })
 
-
 //***************************ROUTES***************** */
-app.use("/api/authentication", authRoute)
-app.use("/api/admin-section", adminRoute)
-app.use("/api/user-section", userRoute)
+app.use("/api/authentication", authRoute);
+app.use("/api/admin-section", adminRoute);
+app.use("/api/user-section", userRoute);
 
-
-app.use(errorHandler)
-
+app.use(errorHandler);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname,"..","frontend", "build", "index.html"));
+    res.sendFile(
+      path.resolve(__dirname, "..", "frontend", "build", "index.html")
+    );
   });
 }
-  
+
 // }
 const PORT = process.env.PORT || 5000;
 mongoose
@@ -68,4 +71,3 @@ mongoose
     });
   })
   .catch((err) => console.log(err));
-
